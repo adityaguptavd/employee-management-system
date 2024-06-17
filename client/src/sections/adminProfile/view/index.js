@@ -1,0 +1,1 @@
+export { default as AdminProfileView } from './admin-profile-view';

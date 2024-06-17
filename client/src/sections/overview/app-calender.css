@@ -1,0 +1,33 @@
+.calendar-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+  background-color: #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.rbc-calendar {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rbc-header {
+  background-color: #f0f0f0;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.rbc-today {
+  background-color: #e3f2fd;
+}
+
+.rbc-event {
+  cursor: pointer;
+  transition: transform 0.1s ease-in;
+}
+
+.rbc-event:hover {
+  transform: scale(1.05);
+}
