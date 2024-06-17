@@ -23,8 +23,8 @@ const app = express();
 dotenv.config();
 
 const port = process.env.PORT || 3000;
-const db_url = process.env.LOCAL_DB_URL || process.env.DB_URL;
-
+const db_url = "mongodb://localhost:27017/freelancing";
+// process.env.LOCAL_DB_URL || process.env.DB_URL
 // Cors object for configuration setup
 const corsOptions = {
   origin: true,

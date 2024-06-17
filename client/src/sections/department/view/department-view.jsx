@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
+import moment from 'moment';
 
 import Card from '@mui/material/Card';
 import Popover from '@mui/material/Popover';
@@ -13,9 +14,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 import CustomSnack from 'src/components/snackbar';
-
 import { useFetchAllDepartmentsQuery, useRemoveDepartmentMutation } from 'src/state/api/department';
-
 import Iconify from 'src/components/iconify';
 import { useTheme } from '@mui/material';
 import Scrollbar from 'src/components/scrollbar';
@@ -29,7 +28,9 @@ import DepartmentTableToolbar from '../department-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 import NewDepartmentForm from '../department-new-form';
 
-// ----------------------------------------------------------------------
+// Helper function to format time
+const formatTime = (time) => moment(time).format('HH:mm');
+
 
 export default function DepartmentPage() {
   const theme = useTheme();
@@ -45,25 +46,16 @@ export default function DepartmentPage() {
 
   const { data, refetch } = useFetchAllDepartmentsQuery({ token });
 
-  const [removeDepartmentMutation, { data: removed, error: removeError }] =
-    useRemoveDepartmentMutation();
+  const [removeDepartmentMutation, { data: removed, error: removeError }] = useRemoveDepartmentMutation();
 
   const [edit, setEdit] = useState(null);
-
   const [departments, setDepartments] = useState([]);
-
   const [page, setPage] = useState(0);
-
   const [order, setOrder] = useState('asc');
-
   const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('name');
-
   const [filterName, setFilterName] = useState('');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const [open, setOpen] = useState(null);
 
   const initialSnackbar = {
@@ -158,11 +150,11 @@ export default function DepartmentPage() {
   }, [data]);
 
   useEffect(() => {
-    if(removed){
+    if (removed) {
       setSelected([]);
       refetch();
     }
-    if(removeError){
+    if (removeError) {
       let mssg = '';
       if (removeError.status === 'FETCH_ERROR') {
         mssg = 'Server is not responding!';
@@ -252,14 +244,14 @@ export default function DepartmentPage() {
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => (
+                  .map((row) => (
                     <DepartmentTableRow
                       key={row._id}
                       name={row.name}
                       description={row.description}
-                      open={row.open}
-                      close={row.close}
-                      pseudoAdmin={row.pseudoAdmin ? "Yes" : "No"}
+                      open={formatTime(row.open)}
+                      close={formatTime(row.close)}
+                      pseudoAdmin={row.pseudoAdmin ? 'Yes' : 'No'}
                       selected={selected.indexOf(row._id) !== -1}
                       handleClick={(event) => handleClick(event, row._id)}
                     />

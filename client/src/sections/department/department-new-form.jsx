@@ -57,6 +57,7 @@ const NewDepartmentForm = ({ refetch, handleCloseMenu, edit, setEdit, setSnackba
       closeTime: dayjs(closeTime).format('HH:mm:ss'),
       pseudoAdmin,
     });
+    console.log(body);
     if (edit) {
       updateDepartmentMutation({ token, body, id: edit._id });
     } else {
